@@ -1,10 +1,14 @@
 import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
+import 'package:ecommerce_app_with_flutter/src/presentation/screens/favorite/favorie_page.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/screens/product_details/product_details.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
+
+import '../../../data/model/favorite/favorite_model.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,6 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var items = Provider.of<FavoriteModel>(context, listen: false).items;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 252, 252, 252),
       appBar: AppBar(
@@ -44,9 +49,14 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 40,
               child: Row(
-                children: const [
-                  AppBarButton(icon: UniconsLine.shopping_bag, number: '0'),
-                  AppBarButton(icon: UniconsLine.comment_message, number: '0'),
+                children: [
+                  Consumer<FavoriteModel>(builder: (_, cart, child) {
+                    return AppBarButton(
+                        icon: UniconsLine.shopping_bag,
+                        number: items.length.toString());
+                  }),
+                  const AppBarButton(
+                      icon: UniconsLine.comment_message, number: '0'),
                 ],
               ),
             )
@@ -114,38 +124,48 @@ class _HomeState extends State<Home> {
                   ),
                   Wrap(
                     children: List.generate(_products!.length, (index) {
-                      return ProductCard(
-                        isFavorite: index == 1 ? false : true,
-                        onpress: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => ProductDetails(
-                                isFavorite: index == 1 ? false : true,
-                                productInfo: ProductModel(
-                                    id: _products![index].id,
-                                    title: _products![index].title,
-                                    price: _products![index].price,
-                                    description: _products![index].description,
-                                    category: _products![index].category,
-                                    image: _products![index].image,
-                                    rating: Rating(
-                                        rate: _products![index].rating.rate,
-                                        count: _products![index].rating.count)),
+                      return Consumer<FavoriteModel>(builder: (_, cart, child) {
+                        return ProductCard(
+                          addToFavorite: () {
+                            Provider.of<FavoriteModel>(_, listen: false).add(
+                              _products![index],
+                            );
+                          },
+                          isFavorite:
+                              items.contains(_products![index]) ? false : true,
+                          onpress: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => ProductDetails(
+                                  isFavorite: index == 1 ? false : true,
+                                  productInfo: ProductModel(
+                                      id: _products![index].id,
+                                      title: _products![index].title,
+                                      price: _products![index].price,
+                                      description:
+                                          _products![index].description,
+                                      category: _products![index].category,
+                                      image: _products![index].image,
+                                      rating: Rating(
+                                          rate: _products![index].rating.rate,
+                                          count:
+                                              _products![index].rating.count)),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        producInfo: ProductModel(
-                            id: _products![index].id,
-                            title: _products![index].title,
-                            price: _products![index].price,
-                            description: _products![index].description,
-                            category: _products![index].category,
-                            image: _products![index].image,
-                            rating: Rating(
-                                rate: _products![index].rating.rate,
-                                count: _products![index].rating.count)),
-                      );
+                            );
+                          },
+                          producInfo: ProductModel(
+                              id: _products![index].id,
+                              title: _products![index].title,
+                              price: _products![index].price,
+                              description: _products![index].description,
+                              category: _products![index].category,
+                              image: _products![index].image,
+                              rating: Rating(
+                                  rate: _products![index].rating.rate,
+                                  count: _products![index].rating.count)),
+                        );
+                      });
                     }),
                   ),
                 ],
@@ -182,19 +202,24 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(UniconsLine.heart_alt),
-                SizedBox(height: 5),
-                Text(
-                  'Favorite',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                )
-              ],
-            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const FavoritePage()));
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(UniconsLine.heart_alt),
+                    SizedBox(height: 5),
+                    Text(
+                      'Favorite',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    )
+                  ],
+                )),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [

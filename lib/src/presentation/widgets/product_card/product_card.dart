@@ -8,8 +8,10 @@ class ProductCard extends StatelessWidget {
     required this.isFavorite,
     required this.onpress,
     required this.producInfo,
+    required this.addToFavorite,
   }) : super(key: key);
   final Function onpress;
+  final Function addToFavorite;
   final ProductModel producInfo;
   final bool isFavorite;
   @override
@@ -109,7 +111,9 @@ class ProductCard extends StatelessWidget {
           top: 15,
           right: 2,
           child: IconButton(
-            onPressed: null,
+            onPressed: () {
+              addToFavorite();
+            },
             icon: isFavorite
                 ? const Icon(
                     Icons.favorite_border,

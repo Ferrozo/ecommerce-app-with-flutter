@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   unicons: ^2.1.1
   http: ^0.13.5
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
