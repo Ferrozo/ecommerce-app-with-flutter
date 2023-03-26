@@ -2,14 +2,14 @@ import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
+
+import '../../../data/model/favorite/favorite_model.dart';
 
 // ignore: must_be_immutable
 class ProductDetails extends StatelessWidget {
-  ProductDetails(
-      {Key? key, required this.isFavorite, required this.productInfo})
-      : super(key: key);
-  bool isFavorite;
+  const ProductDetails({Key? key, required this.productInfo}) : super(key: key);
   final ProductModel productInfo;
   @override
   Widget build(BuildContext context) {
@@ -22,22 +22,31 @@ class ProductDetails extends StatelessWidget {
         leading: const BackButton(
           color: Colors.black54,
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              onPressed: null,
-              icon: isFavorite
-                  ? const Icon(UniconsLine.heart_alt)
-                  : const Icon(Icons.favorite,
-                      color: Color.fromARGB(255, 240, 127, 164)),
-            ),
-            const IconButton(
-              onPressed: null,
-              icon: Icon(UniconsLine.share_alt),
-            ),
-            const AppBarButton(icon: UniconsLine.shopping_bag, number: '1'),
-          ],
+        title: Consumer<FavoriteModel>(
+          builder: (_, favorie, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    favorie.add(productInfo);
+                  },
+                  icon: favorie.items.contains(productInfo)
+                      ? const Icon(Icons.favorite,
+                          color: Color.fromARGB(255, 240, 127, 164))
+                      : Icon(
+                          UniconsLine.heart_alt,
+                          color: Colors.grey.shade500,
+                        ),
+                ),
+                const IconButton(
+                  onPressed: null,
+                  icon: Icon(UniconsLine.share_alt),
+                ),
+                const AppBarButton(icon: UniconsLine.shopping_bag, itemSize: 0),
+              ],
+            );
+          },
         ),
         elevation: 0,
       ),

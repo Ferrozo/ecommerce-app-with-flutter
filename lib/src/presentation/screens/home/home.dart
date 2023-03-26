@@ -3,6 +3,7 @@ import 'package:ecommerce_app_with_flutter/src/presentation/screens/favorite/fav
 import 'package:ecommerce_app_with_flutter/src/presentation/screens/product_details/product_details.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
+import 'package:ecommerce_app_with_flutter/src/services/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var items = Provider.of<FavoriteModel>(context, listen: false).items;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 252, 252, 252),
       appBar: AppBar(
@@ -45,21 +45,23 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SearchBox(),
+            const Expanded(
+              flex: 3,
+              child: SearchBox(),
+            ),
             SizedBox(
               height: 40,
-              child: Row(
-                children: [
-                  Consumer<FavoriteModel>(builder: (_, cart, child) {
-                    return AppBarButton(
+              child: Consumer<CartProvider>(
+                builder: (_, cart, child) {
+                  return Row(children: [
+                    AppBarButton(
                         icon: UniconsLine.shopping_bag,
-                        number: items.length.toString());
-                  }),
-                  const AppBarButton(
-                      icon: UniconsLine.comment_message, number: '0'),
-                ],
+                        itemSize: cart.getCounter()),
+                    const AppBarButton(icon: UniconsLine.bell, itemSize: 0),
+                  ]);
+                },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -124,32 +126,22 @@ class _HomeState extends State<Home> {
                   ),
                   Wrap(
                     children: List.generate(_products!.length, (index) {
-                      return Consumer<FavoriteModel>(builder: (_, cart, child) {
+                      return Consumer<FavoriteModel>(
+                          builder: (_, favorie, child) {
                         return ProductCard(
                           addToFavorite: () {
                             Provider.of<FavoriteModel>(_, listen: false).add(
                               _products![index],
                             );
                           },
-                          isFavorite:
-                              items.contains(_products![index]) ? false : true,
+                          isFavorite: favorie.items.contains(_products![index])
+                              ? false
+                              : true,
                           onpress: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => ProductDetails(
-                                  isFavorite: index == 1 ? false : true,
-                                  productInfo: ProductModel(
-                                      id: _products![index].id,
-                                      title: _products![index].title,
-                                      price: _products![index].price,
-                                      description:
-                                          _products![index].description,
-                                      category: _products![index].category,
-                                      image: _products![index].image,
-                                      rating: Rating(
-                                          rate: _products![index].rating.rate,
-                                          count:
-                                              _products![index].rating.count)),
+                                  productInfo: _products![index],
                                 ),
                               ),
                             );

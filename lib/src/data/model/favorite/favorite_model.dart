@@ -12,10 +12,7 @@ class FavoriteModel extends ChangeNotifier {
   void add(ProductModel product) {
     if (_items.contains(product)) {
       _items.remove(product);
-      print('Remove changed');
     } else {
-      print('add changed');
-
       _items.add(product);
     }
     notifyListeners();

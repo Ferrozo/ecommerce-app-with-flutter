@@ -12,15 +12,13 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
-    var _items = Provider.of<FavoriteModel>(context, listen: false).items;
-    print('Lenght ${_items.length}');
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
         child: Consumer<FavoriteModel>(
-          builder: (context, cart, child) {
+          builder: (context, favorie, child) {
             return Column(
-              children: [Text('${_items[0].title}')],
+              children: [Text(favorie.items[0].title)],
             );
           },
         ),
