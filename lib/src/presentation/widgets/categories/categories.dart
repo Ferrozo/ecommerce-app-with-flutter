@@ -1,26 +1,37 @@
+import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
-class Categories extends StatelessWidget {
+class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
 
   @override
+  State<Categories> createState() => _CategoriesState();
+}
+
+class _CategoriesState extends State<Categories> {
+  List _categories = [];
+
+  void _getCategory() async {
+    _categories = (await APICallService.getCategories());
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCategory();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List categories = [
-      'Category',
-      'fight',
-      'Category',
-      'Category',
-      'Top Up',
-      'Top Up',
-    ];
     List<IconData> icons = [
       UniconsLine.list_ul,
       Icons.flight,
       Icons.supervised_user_circle,
       Icons.flare_sharp,
-      Icons.wb_cloudy_outlined,
-      Icons.flight,
+      // Icons.wb_cloudy_outlined,
+      // Icons.flight,
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -36,9 +47,8 @@ class Categories extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  for (int i = 0; i < 6; i++)
+                  for (int i = 0; i < _categories.length; i++)
                     Column(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           alignment: Alignment.center,
@@ -56,7 +66,7 @@ class Categories extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          categories[i],
+                          _categories[i],
                           style: const TextStyle(
                             fontSize: 10,
                             color: Colors.black54,

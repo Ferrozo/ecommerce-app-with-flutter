@@ -1,5 +1,5 @@
 import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
-import 'package:ecommerce_app_with_flutter/src/presentation/screens/favorite/favorie_page.dart';
+import 'package:ecommerce_app_with_flutter/src/presentation/screens/cart/cart.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/screens/product_details/product_details.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
@@ -55,9 +55,17 @@ class _HomeState extends State<Home> {
                 builder: (_, cart, child) {
                   return Row(children: [
                     AppBarButton(
-                        icon: UniconsLine.shopping_bag,
-                        itemSize: cart.getCounter()),
-                    const AppBarButton(icon: UniconsLine.bell, itemSize: 0),
+                      icon: UniconsLine.shopping_bag,
+                      itemSize: cart.cart.length,
+                      onPress: () {
+                        _goToCartPage();
+                      },
+                    ),
+                    AppBarButton(
+                      icon: UniconsLine.bell,
+                      itemSize: 0,
+                      onPress: () {},
+                    ),
                   ]);
                 },
               ),
@@ -180,67 +188,42 @@ class _HomeState extends State<Home> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(UniconsLine.estate, color: Color(0xff76bbaa)),
-                SizedBox(height: 5),
-                Text(
-                  'Home',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xff76bbaa),
-                  ),
-                ),
-              ],
+            const NaviBarBtn(
+              itemSize: 2,
+              icon: UniconsLine.estate,
+              title: 'Home',
+              isFavorite: false,
             ),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const FavoritePage()));
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(UniconsLine.heart_alt),
-                    SizedBox(height: 5),
-                    Text(
-                      'Favorite',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                )),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(UniconsLine.wallet),
-                SizedBox(height: 5),
-                Text(
-                  'Wallet',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                )
-              ],
+            Consumer<FavoriteModel>(
+              builder: (_, favorite, child) {
+                return NaviBarBtn(
+                  itemSize: favorite.items.length,
+                  icon: UniconsLine.heart,
+                  title: 'Favorite',
+                  isFavorite: true,
+                );
+              },
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(UniconsLine.user),
-                SizedBox(height: 5),
-                Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                )
-              ],
+            const NaviBarBtn(
+              itemSize: 2,
+              icon: UniconsLine.wallet,
+              title: 'Wallet',
+              isFavorite: false,
+            ),
+            const NaviBarBtn(
+              itemSize: 2,
+              icon: UniconsLine.user,
+              title: 'Profile',
+              isFavorite: false,
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _goToCartPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const CartPage()));
   }
 }

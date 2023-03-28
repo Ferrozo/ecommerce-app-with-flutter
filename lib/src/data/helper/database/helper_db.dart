@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_with_flutter/src/data/model/cart/cart_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
@@ -19,30 +20,30 @@ class DBHelper {
   initDatabase() async {
     io.Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, 'database.db');
-    var db = await openDatabase(path, version: 1, onCreate: _createDataColumn);
+    var db = await openDatabase(path, version: 1, onCreate: _createDBColumn);
+    return db;
   }
 
-  _createDataColumn(Database db, int version) async {
+  _createDBColumn(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE cart (id INTEGER PRIMARY KEY, productId VARCHAR UNIQUE, productName TEXT, initialPrice REAL, productPrice REAL,  quantity INTEGER, img TEXT),',
+      'CREATE TABLE cart (id INTEGER PRIMARY KEY, productId VARCHAR UNIQUE, productName TEXT, initialPrice REAL, productPrice REAL,  quantity INTEGER, img TEXT)',
     );
   }
 
-  Future<Cart> insert(Cart cart) async {
-    var dbClinet = await database;
-    await dbClinet!.insert('cart', cart.toMap());
+  Future<Cart> insertToDB(Cart cart) async {
+    var db = await database;
+    await db!.insert('cart', cart.toMap());
 
     return cart;
   }
 
   Future<List<Cart>> getCartList() async {
-    var dbClient = await database;
-    final List<Map<String, Object?>> queryResult =
-        await dbClient!.query('cart');
+    var db = await database;
+    final List<Map<String, Object?>> queryResult = await db!.query('cart');
     return queryResult.map((e) => Cart.fromMap(e)).toList();
   }
 
-  Future<int> updateQuantiy(Cart cart) async {
+  Future<int> updateQuantity(Cart cart) async {
     var db = await database;
     return db!.update(
       'cart',

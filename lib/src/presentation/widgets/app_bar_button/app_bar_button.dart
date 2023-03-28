@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
 class AppBarButton extends StatelessWidget {
-  const AppBarButton({Key? key, required this.icon, required this.itemSize})
-      : super(key: key);
+  const AppBarButton({
+    Key? key,
+    required this.icon,
+    required this.itemSize,
+    required this.onPress,
+  }) : super(key: key);
   final IconData icon;
   final int itemSize;
+  final Function onPress;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         IconButton(
           padding: const EdgeInsets.all(0),
-          onPressed: null,
-          icon: Icon(icon),
+          onPressed: () {
+            onPress();
+          },
+          icon: Icon(
+            icon,
+            color: Colors.black54,
+          ),
         ),
         itemSize != 0
             ? Positioned(
