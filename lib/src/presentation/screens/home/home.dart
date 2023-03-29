@@ -1,5 +1,5 @@
 import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
-import 'package:ecommerce_app_with_flutter/src/presentation/screens/cart/cart.dart';
+import 'package:ecommerce_app_with_flutter/src/presentation/screens/export_screens.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/screens/product_details/product_details.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
                   return Row(children: [
                     AppBarButton(
                       icon: UniconsLine.shopping_bag,
-                      itemSize: cart.cart.length,
+                      itemSize: cart.counter,
                       onPress: () {
                         _goToCartPage();
                       },
@@ -188,32 +188,40 @@ class _HomeState extends State<Home> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const NaviBarBtn(
+            NaviBarBtn(
+              onPressed: () => _goFavoritePage(),
               itemSize: 2,
               icon: UniconsLine.estate,
               title: 'Home',
+              isActive: true,
               isFavorite: false,
             ),
             Consumer<FavoriteModel>(
               builder: (_, favorite, child) {
                 return NaviBarBtn(
+                  onPressed: () => _goFavoritePage(),
                   itemSize: favorite.items.length,
                   icon: UniconsLine.heart,
                   title: 'Favorite',
+                  isActive: false,
                   isFavorite: true,
                 );
               },
             ),
-            const NaviBarBtn(
+            NaviBarBtn(
+              onPressed: () => _goFavoritePage(),
               itemSize: 2,
               icon: UniconsLine.wallet,
               title: 'Wallet',
               isFavorite: false,
+              isActive: false,
             ),
-            const NaviBarBtn(
+            NaviBarBtn(
+              onPressed: () => _goFavoritePage(),
               itemSize: 2,
               icon: UniconsLine.user,
               title: 'Profile',
+              isActive: false,
               isFavorite: false,
             ),
           ],
@@ -225,5 +233,10 @@ class _HomeState extends State<Home> {
   void _goToCartPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const CartPage()));
+  }
+
+  void _goFavoritePage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const FavoritePage()));
   }
 }

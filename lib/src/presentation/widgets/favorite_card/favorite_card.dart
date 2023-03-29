@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
 
-// ignore: must_be_immutable
-class CartCard extends StatelessWidget {
-  CartCard({
+class FavoriteCard extends StatelessWidget {
+  const FavoriteCard({
     Key? key,
     required this.title,
     required this.img,
     required this.price,
-    required this.quantity,
-    required this.quantityManagment,
+    required this.onPressed,
   }) : super(key: key);
 
   final String title;
-  final double price;
-  final ValueNotifier quantity;
   final String img;
-  ValueListenableBuilder quantityManagment;
+  final double price;
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +27,8 @@ class CartCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -38,6 +38,7 @@ class CartCard extends StatelessWidget {
                 color: Colors.white70, borderRadius: BorderRadius.circular(10)),
             child: Image.network(img),
           ),
+          const SizedBox(width: 10),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,22 +46,13 @@ class CartCard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 100,
+                    width: 180,
                     child: Text(
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                     ),
-                  ),
-                  Text(
-                    quantity.value > 1
-                        ? '(${quantity.value.toString()}) items'
-                        : '',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
-                    ),
-                  ),
+                  )
                 ],
               ),
               const SizedBox(height: 10),
@@ -69,14 +61,21 @@ class CartCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(price.toString()),
+                    Text('\$ ${price.toString()}'),
                     const Spacer(),
-                    quantityManagment,
                   ],
                 ),
               ),
             ],
           ),
+          IconButton(
+              onPressed: () {
+                onPressed();
+              },
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.red.shade400,
+              ))
         ],
       ),
     );

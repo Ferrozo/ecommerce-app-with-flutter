@@ -63,150 +63,163 @@ class _CartPageState extends State<CartPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Expanded(
-              child: Consumer<CartProvider>(
-                builder: (BuildContext context, provider, widget) {
-                  print('form cart ${provider.cart.length}');
-                  if (provider.cart.isEmpty) {
-                    return const Center(
-                        child: Text(
-                      'Your Cart is Empty',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18.0),
-                    ));
-                  } else {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: provider.cart.length,
-                        itemBuilder: (context, index) {
-                          return CartCard(
-                            title: provider.cart[index].productName.toString(),
-                            img: provider.cart[index].img.toString(),
-                            price:
-                                provider.cart[index].productPrice!.toDouble(),
-                            quantity: ValueNotifier(
-                                provider.cart[index].quantity!.value),
-                            quantityManagment: ValueListenableBuilder<int>(
-                                valueListenable: provider.cart[index].quantity!,
-                                builder: (context, val, child) {
-                                  return Row(
-                                    children: [
-                                      IconButton(
-                                        padding: const EdgeInsets.all(0),
-                                        onPressed: () {
-                                          dbHelper!.deleteCartItem(
-                                              provider.cart[index].id!);
-                                          provider.removeItem(
-                                              provider.cart[index].id!);
-                                          provider.removeItem(
-                                              provider.cart[index].id!);
-                                          provider.removeFromCounter();
-                                        },
-                                        icon: Icon(
-                                          UniconsLine.trash,
-                                          color: Colors.red.withOpacity(0.5),
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 20,
-                                        width: 20,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
-                                          color: Colors.grey.shade100,
-                                        ),
-                                        child: IconButton(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Expanded(
+                  child: Consumer<CartProvider>(
+                    builder: (BuildContext context, provider, widget) {
+                      if (provider.cart.isEmpty) {
+                        return const Center(
+                            child: Text(
+                          'Your Cart is Empty',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ));
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: provider.cart.length,
+                            itemBuilder: (context, index) {
+                              return CartCard(
+                                title:
+                                    provider.cart[index].productName.toString(),
+                                img: provider.cart[index].img.toString(),
+                                price: provider.cart[index].productPrice!
+                                    .toDouble(),
+                                quantity: ValueNotifier(
+                                    provider.cart[index].quantity!.value),
+                                quantityManagment: ValueListenableBuilder<int>(
+                                    valueListenable:
+                                        provider.cart[index].quantity!,
+                                    builder: (context, val, child) {
+                                      return Row(
+                                        children: [
+                                          IconButton(
                                             padding: const EdgeInsets.all(0),
                                             onPressed: () {
-                                              cart.deleteQuantity(
+                                              dbHelper!.deleteCartItem(
                                                   provider.cart[index].id!);
-                                              cart.removeTotalPrice(
-                                                  double.parse(provider
-                                                      .cart[index].productPrice
-                                                      .toString()));
+                                              provider.removeItem(
+                                                  provider.cart[index].id!);
+                                              provider.removeItem(
+                                                  provider.cart[index].id!);
+                                              provider.removeFromCounter();
                                             },
-                                            icon: const Icon(
-                                              UniconsLine.minus,
-                                              color: Colors.black54,
-                                              size: 12,
-                                            )),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Container(
-                                        height: 20,
-                                        width: 20,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
-                                          color: Colors.pink,
-                                        ),
-                                        child: IconButton(
-                                          padding: const EdgeInsets.all(0),
-                                          onPressed: () {
-                                            cart.addQuantity(
-                                                provider.cart[index].id!);
-                                            dbHelper!
-                                                .updateQuantity(Cart(
-                                                    id: index,
-                                                    productId: index.toString(),
-                                                    productName: provider
-                                                        .cart[index]
-                                                        .productName,
-                                                    initialPrice: provider
-                                                        .cart[index]
-                                                        .initialPrice,
-                                                    productPrice: provider
-                                                        .cart[index]
-                                                        .productPrice,
-                                                    quantity: ValueNotifier(
-                                                        provider.cart[index]
-                                                            .quantity!.value),
-                                                    img: provider
-                                                        .cart[index].img))
-                                                .then((value) {
-                                              setState(() {
-                                                cart.addTotalPrice(double.parse(
-                                                    provider.cart[index]
-                                                        .productPrice
-                                                        .toString()));
-                                              });
-                                            });
-                                          },
-                                          icon: const Icon(
-                                            UniconsLine.plus,
-                                            color: Colors.white,
-                                            size: 14,
+                                            icon: Icon(
+                                              UniconsLine.trash,
+                                              color:
+                                                  Colors.red.withOpacity(0.5),
+                                              size: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                          );
-                        });
-                  }
+                                          Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                              color: Colors.grey.shade100,
+                                            ),
+                                            child: IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                onPressed: () {
+                                                  cart.deleteQuantity(
+                                                      provider.cart[index].id!);
+                                                  cart.removeTotalPrice(
+                                                      double.parse(provider
+                                                          .cart[index]
+                                                          .productPrice
+                                                          .toString()));
+                                                },
+                                                icon: const Icon(
+                                                  UniconsLine.minus,
+                                                  color: Colors.black54,
+                                                  size: 12,
+                                                )),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                              color: Colors.pink,
+                                            ),
+                                            child: IconButton(
+                                              padding: const EdgeInsets.all(0),
+                                              onPressed: () {
+                                                cart.addQuantity(
+                                                    provider.cart[index].id!);
+                                                dbHelper!
+                                                    .updateQuantity(Cart(
+                                                        id: index,
+                                                        productId:
+                                                            index.toString(),
+                                                        productName: provider
+                                                            .cart[index]
+                                                            .productName,
+                                                        initialPrice: provider
+                                                            .cart[index]
+                                                            .initialPrice,
+                                                        productPrice: provider
+                                                            .cart[index]
+                                                            .productPrice,
+                                                        quantity: ValueNotifier(
+                                                            provider
+                                                                .cart[index]
+                                                                .quantity!
+                                                                .value),
+                                                        img: provider
+                                                            .cart[index].img))
+                                                    .then((value) {
+                                                  setState(() {
+                                                    cart.addTotalPrice(
+                                                        double.parse(provider
+                                                            .cart[index]
+                                                            .productPrice
+                                                            .toString()));
+                                                  });
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                UniconsLine.plus,
+                                                color: Colors.white,
+                                                size: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                              );
+                            });
+                      }
+                    },
+                  ),
+                ),
+              ),
+              Consumer<CartProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+                  final ValueNotifier<int?> totalPrice = ValueNotifier(null);
+
+                  return Column(
+                    children: [
+                      ValueListenableBuilder<int?>(
+                          valueListenable: totalPrice,
+                          builder: (context, val, child) {
+                            return Container();
+                          }),
+                    ],
+                  );
                 },
               ),
-            ),
-            Consumer<CartProvider>(
-              builder: (BuildContext context, value, Widget? child) {
-                final ValueNotifier<int?> totalPrice = ValueNotifier(null);
-                for (var element in value.cart) {}
-                return Column(
-                  children: [
-                    ValueListenableBuilder<int?>(
-                        valueListenable: totalPrice,
-                        builder: (context, val, child) {
-                          return Container();
-                        }),
-                  ],
-                );
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

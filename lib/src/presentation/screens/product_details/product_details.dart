@@ -338,9 +338,8 @@ class _ProductDetailsState extends State<ProductDetails> {
         .then((value) {
       cart.addTotalPrice(widget.productInfo.price);
       cart.addToCounter();
-      print('Product add to cart');
     }).onError((error, stackTrace) {
-      print(error.toString());
+      // ignored
     });
   }
 

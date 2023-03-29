@@ -18,7 +18,7 @@ class FavoriteModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(ProductModel product) {
+  void removeItem(ProductModel product) {
     _items.remove(product);
     notifyListeners();
   }

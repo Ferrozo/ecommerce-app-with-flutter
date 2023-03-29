@@ -6,31 +6,37 @@ class NaviBarBtn extends StatelessWidget {
     this.itemSize,
     this.isFavorite,
     required this.icon,
+    required this.isActive,
     required this.title,
+    required this.onPressed,
   }) : super(key: key);
   final String title;
   final bool? isFavorite;
   final IconData icon;
   final int? itemSize;
+  final Function onPressed;
+  final bool isActive;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            onPressed();
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
-                color: Colors.black87,
+                color: isActive ? Color(0xff76bbaa) : Colors.black87,
               ),
               // const SizedBox(height: 5),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10,
-                  color: Colors.black87,
+                  color: isActive ? const Color(0xff76bbaa) : Colors.black87,
                 ),
               )
             ],
