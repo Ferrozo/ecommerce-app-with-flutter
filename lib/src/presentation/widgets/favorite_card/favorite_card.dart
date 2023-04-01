@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 
 class FavoriteCard extends StatelessWidget {
   const FavoriteCard({

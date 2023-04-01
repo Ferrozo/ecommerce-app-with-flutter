@@ -29,7 +29,7 @@ class NaviBarBtn extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isActive ? Color(0xff76bbaa) : Colors.black87,
+                color: isActive ? const Color(0xff76bbaa) : Colors.black87,
               ),
               // const SizedBox(height: 5),
               Text(

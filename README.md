@@ -1,16 +1,27 @@
-# ecommerce_app_with_flutter
+<img src=''/>
 
-A new Flutter project.
 
-## Getting Started
+E-commerce App, the UI was created inspired from one share on dribble and I made it using Flutter/Dart,Shared Preferences and SQLITE database to manager the cart section product are coming from an API called Fake Store Api <a href='https://fakestoreapi.com'>link here</a>.
 
-This project is a starting point for a Flutter application.
+<p><a href="#"> Download on Google Store</a> for testing the app</p> <br>
 
-A few resources to get you started if this is your first Flutter project:
+<p>Or download the APK <a href="#"> click here </a> for testing the app</p>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Give a star (⭐) the repo it really motivates me to share more open source
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
+
+
+### Clone the repository
+```
+git clone https://github.com/Ferrozo/ecommerce-app-with-flutter
+```
+### Install the dependecies
+```
+flutter pub get
+```
+### Run the project
+
+```
+flutter run
+```

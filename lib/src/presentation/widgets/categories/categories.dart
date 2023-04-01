@@ -10,7 +10,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List _categories = [];
+  List<dynamic> _categories = [];
 
   void _getCategory() async {
     _categories = (await APICallService.getCategories());
@@ -30,12 +30,11 @@ class _CategoriesState extends State<Categories> {
       Icons.flight,
       Icons.supervised_user_circle,
       Icons.flare_sharp,
-      // Icons.wb_cloudy_outlined,
-      // Icons.flight,
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         color: Colors.white,
         width: MediaQuery.of(context).size.width,
         height: 120,
@@ -82,7 +81,7 @@ class _CategoriesState extends State<Categories> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < 3; i++)
+                  for (int i = 0; i < _categories.length; i++)
                     Container(
                       margin: EdgeInsets.only(left: i == 0 ? 0 : 5),
                       height: 3.5,

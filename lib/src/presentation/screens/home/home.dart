@@ -45,9 +45,14 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Expanded(
+            Expanded(
               flex: 3,
-              child: SearchBox(),
+              child: SearchBox(
+                  autoFocus: false,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => SearchPage())));
+                  }),
             ),
             SizedBox(
               height: 40,
