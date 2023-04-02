@@ -1,8 +1,8 @@
+import 'package:ecommerce_app_with_flutter/src/core/app_bar_colors.dart';
 import 'package:ecommerce_app_with_flutter/src/data/helper/database/helper_db.dart';
 import 'package:ecommerce_app_with_flutter/src/data/model/cart/cart_model.dart';
 import 'package:ecommerce_app_with_flutter/src/services/cart_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
@@ -30,9 +30,7 @@ class _CartPageState extends State<CartPage> {
 
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        systemOverlayStyle: AppBarColors.darkIcons,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: const BackButton(color: Colors.black54),

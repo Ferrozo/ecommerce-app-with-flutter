@@ -7,3 +7,4 @@ export './decorator_dot/decorator_dot.dart';
 export './navi_bar_btn/navi_bar_btn.dart';
 export './favorite_card/favorite_card.dart';
 export './cart_card/cart_card.dart';
+export './profile_item_card/profile_item_card.dart';

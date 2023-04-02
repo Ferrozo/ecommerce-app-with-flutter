@@ -2,9 +2,9 @@ import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/screens/product_details/product_details.dart';
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/app_bar_colors.dart';
 import '../../../data/model/favorite/favorite_model.dart';
 import '../../widgets/export_widgets.dart';
 
@@ -17,7 +17,6 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _textController = TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   late List<ProductModel>? _products = [];
   String search = '';
@@ -37,9 +36,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        systemOverlayStyle: AppBarColors.darkIcons,
         leading: const BackButton(
           color: Colors.black54,
         ),
@@ -49,7 +46,6 @@ class _SearchPageState extends State<SearchPage> {
           controller: _textController,
           autoFocus: true,
           onChange: (value) {
-            print(value);
             setState(() {
               search = _textController.value.text;
             });

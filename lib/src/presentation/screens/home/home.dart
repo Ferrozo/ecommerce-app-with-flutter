@@ -5,10 +5,10 @@ import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widge
 import 'package:ecommerce_app_with_flutter/src/services/api_call_service.dart';
 import 'package:ecommerce_app_with_flutter/src/services/cart_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../../core/app_bar_colors.dart';
 import '../../../data/model/favorite/favorite_model.dart';
 
 class Home extends StatefulWidget {
@@ -39,9 +39,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        systemOverlayStyle: AppBarColors.darkIcons,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -51,7 +49,7 @@ class _HomeState extends State<Home> {
                   autoFocus: false,
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: ((context) => SearchPage())));
+                        builder: ((context) => const SearchPage())));
                   }),
             ),
             SizedBox(
@@ -222,7 +220,7 @@ class _HomeState extends State<Home> {
               isActive: false,
             ),
             NaviBarBtn(
-              onPressed: () => _goFavoritePage(),
+              onPressed: () => _goProfilePage(),
               itemSize: 2,
               icon: UniconsLine.user,
               title: 'Profile',
@@ -243,5 +241,10 @@ class _HomeState extends State<Home> {
   void _goFavoritePage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const FavoritePage()));
+  }
+
+  void _goProfilePage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const ProfilePage()));
   }
 }

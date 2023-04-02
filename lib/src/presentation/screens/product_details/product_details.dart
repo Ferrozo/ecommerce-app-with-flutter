@@ -4,10 +4,10 @@ import 'package:ecommerce_app_with_flutter/src/data/model/product_model.dart';
 import 'package:ecommerce_app_with_flutter/src/presentation/widgets/export_widgets.dart';
 import 'package:ecommerce_app_with_flutter/src/services/cart_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../../core/app_bar_colors.dart';
 import '../../../data/model/favorite/favorite_model.dart';
 import '../export_screens.dart';
 
@@ -28,9 +28,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        systemOverlayStyle: AppBarColors.darkIcons,
         leading: const BackButton(
           color: Colors.black54,
         ),

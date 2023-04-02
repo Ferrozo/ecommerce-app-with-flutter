@@ -1,6 +1,6 @@
+import 'package:ecommerce_app_with_flutter/src/core/app_bar_colors.dart';
 import 'package:ecommerce_app_with_flutter/src/data/model/favorite/favorite_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/export_widgets.dart';
@@ -17,9 +17,7 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+        systemOverlayStyle: AppBarColors.darkIcons,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: const BackButton(color: Colors.black54),
