@@ -13,7 +13,7 @@ E-commerce App, the UI was created inspired from one share on dribble and I made
 
 <!-- <p><a href="#"> Download on Google Store</a> for testing the app</p> <br> -->
 
-<p>Or download the APK <a href="#"> click here </a> for testing the app</p>
+<p>Or download the APK <a href="https://github.com/Ferrozo/ecommerce-app-with-flutter/releases/download/ecommerce/app-release.apk"> click here </a> for testing the app</p>
 
 Give a star (⭐) the repo and follow me it really motivates me to share more open source 
 
