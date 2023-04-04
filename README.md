@@ -15,7 +15,7 @@ E-commerce App, the UI was created inspired from one share on dribble and I made
 
 <p>Or download the APK <a href="#"> click here </a> for testing the app</p>
 
-Give a star (⭐) the repo it really motivates me to share more open source
+Give a star (⭐) the repo and follow me it really motivates me to share more open source 
 
 ## Installation
 
