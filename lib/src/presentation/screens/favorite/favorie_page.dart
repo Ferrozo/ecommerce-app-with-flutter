@@ -35,38 +35,36 @@ class _FavoritePageState extends State<FavoritePage> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Consumer<FavoriteModel>(
-          builder: (context, favorite, child) {
-            if (favorite.items.isNotEmpty) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: ListView.builder(
-                  itemCount: favorite.items.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return FavoriteCard(
-                      title: favorite.items[index].title,
-                      img: favorite.items[index].image,
-                      onPressed: () {
-                        Provider.of<FavoriteModel>(context, listen: false)
-                            .removeItem(
-                          favorite.items[0],
-                        );
-                      },
-                      price: favorite.items[index].price,
-                    );
-                  },
-                ),
-              );
-            } else {
-              return const Center(
-                  child: Text(
-                'Your favorite page is Empty',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-              ));
-            }
-          },
-        ),
+      body: Consumer<FavoriteModel>(
+        builder: (context, favorite, child) {
+          if (favorite.items.isNotEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: ListView.builder(
+                itemCount: favorite.items.length,
+                itemBuilder: (BuildContext context, index) {
+                  return FavoriteCard(
+                    title: favorite.items[index].title,
+                    img: favorite.items[index].image,
+                    onPressed: () {
+                      Provider.of<FavoriteModel>(context, listen: false)
+                          .removeItem(
+                        favorite.items[0],
+                      );
+                    },
+                    price: favorite.items[index].price,
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(
+                child: Text(
+              'Your favorite page is Empty',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+            ));
+          }
+        },
       ),
     );
   }

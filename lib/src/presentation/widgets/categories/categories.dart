@@ -26,10 +26,10 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     List<IconData> icons = [
-      UniconsLine.list_ul,
-      Icons.flight,
-      Icons.supervised_user_circle,
-      Icons.flare_sharp,
+      UniconsLine.circuit,
+      UniconsLine.diamond,
+      Icons.man_rounded,
+      Icons.woman_rounded,
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

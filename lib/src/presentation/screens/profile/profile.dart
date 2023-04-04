@@ -1,5 +1,6 @@
 import 'package:ecommerce_app_with_flutter/src/core/app_bar_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
 
 import '../../widgets/export_widgets.dart';
 
@@ -61,16 +62,28 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text('John Doe'),
+                      SizedBox(height: 10),
+                      Text('Your status description'),
                     ]),
               ],
             ),
-            const ProfileItemCard(),
-            const ProfileItemCard(),
-            const ProfileItemCard(),
-            const ProfileItemCard(),
-            const ProfileItemCard(),
+            const SizedBox(height: 40),
+            const ProfileItemCard(
+              title: 'Personal Data',
+              icon: UniconsLine.user,
+            ),
+            const ProfileItemCard(
+              title: 'Settings',
+              icon: UniconsLine.setting,
+            ),
+            const ProfileItemCard(
+              title: 'E-Statement',
+              icon: UniconsLine.wallet,
+            ),
+            const ProfileItemCard(
+              title: 'Refferal Code',
+              icon: UniconsLine.heart,
+            ),
           ],
         ),
       ),

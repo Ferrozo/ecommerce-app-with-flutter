@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
 class ProfileItemCard extends StatelessWidget {
-  const ProfileItemCard({Key? key}) : super(key: key);
-
+  const ProfileItemCard({
+    Key? key,
+    required this.title,
+    required this.icon,
+  }) : super(key: key);
+  final String title;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,14 +26,14 @@ class ProfileItemCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color.fromARGB(15, 158, 158, 158),
                 ),
-                child: const Icon(UniconsLine.user),
+                child: Icon(icon),
               ),
               const SizedBox(width: 20),
-              const Text('Personal Data')
+              Text(title)
             ],
           ),
           IconButton(
-            icon: Icon(UniconsLine.angle_right),
+            icon: const Icon(UniconsLine.angle_right),
             onPressed: () {},
           ),
         ],

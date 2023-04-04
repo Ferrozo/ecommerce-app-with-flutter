@@ -71,36 +71,37 @@ class _SearchPageState extends State<SearchPage> {
                               child: Text('Search for a product'),
                             )
                           : Wrap(
-                              children:
-                                  List.generate(_products!.length, (index) {
-                                if (_products![index]
-                                    .title
-                                    .toLowerCase()
-                                    .contains(search.toLowerCase())) {
-                                  return Consumer<FavoriteModel>(
-                                      builder: (_, favorie, child) {
-                                    return ProductCard(
-                                      addToFavorite: () {
-                                        Provider.of<FavoriteModel>(_,
-                                                listen: false)
-                                            .add(
-                                          _products![index],
-                                        );
-                                      },
-                                      isFavorite: favorie.items
-                                              .contains(_products![index])
-                                          ? false
-                                          : true,
-                                      onpress: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => ProductDetails(
-                                              productInfo: _products![index],
+                              children: List.generate(
+                                _products!.length,
+                                (index) {
+                                  if (_products![index]
+                                      .title
+                                      .toLowerCase()
+                                      .contains(search.toLowerCase())) {
+                                    return Consumer<FavoriteModel>(
+                                        builder: (_, favorie, child) {
+                                      return ProductCard(
+                                        addToFavorite: () {
+                                          Provider.of<FavoriteModel>(_,
+                                                  listen: false)
+                                              .add(
+                                            _products![index],
+                                          );
+                                        },
+                                        isFavorite: favorie.items
+                                                .contains(_products![index])
+                                            ? false
+                                            : true,
+                                        onpress: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) => ProductDetails(
+                                                productInfo: _products![index],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      producInfo: ProductModel(
+                                          );
+                                        },
+                                        producInfo: ProductModel(
                                           id: _products![index].id,
                                           title: _products![index].title,
                                           price: _products![index].price,
@@ -109,18 +110,17 @@ class _SearchPageState extends State<SearchPage> {
                                           category: _products![index].category,
                                           image: _products![index].image,
                                           rating: Rating(
-                                              rate:
-                                                  _products![index].rating.rate,
-                                              count: _products![index]
-                                                  .rating
-                                                  .count)),
-                                    );
-                                  });
-                                }
-                                return const Center(
-                                  child: Text('Not found!'),
-                                );
-                              }),
+                                            rate: _products![index].rating.rate,
+                                            count:
+                                                _products![index].rating.count,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                                  }
+                                  return Container();
+                                },
+                              ),
                             ),
                     ),
                   ],

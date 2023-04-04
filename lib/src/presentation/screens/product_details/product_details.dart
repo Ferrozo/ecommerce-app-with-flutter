@@ -35,20 +35,22 @@ class _ProductDetailsState extends State<ProductDetails> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Consumer<FavoriteModel>(builder: (_, favorie, child) {
-              return IconButton(
-                onPressed: () {
-                  favorie.add(widget.productInfo);
-                },
-                icon: favorie.items.contains(widget.productInfo)
-                    ? const Icon(Icons.favorite,
-                        color: Color.fromARGB(255, 240, 127, 164))
-                    : Icon(
-                        UniconsLine.heart_alt,
-                        color: Colors.grey.shade500,
-                      ),
-              );
-            }),
+            Consumer<FavoriteModel>(
+              builder: (_, favorie, child) {
+                return IconButton(
+                  onPressed: () {
+                    favorie.add(widget.productInfo);
+                  },
+                  icon: favorie.items.contains(widget.productInfo)
+                      ? const Icon(Icons.favorite,
+                          color: Color.fromARGB(255, 240, 127, 164))
+                      : Icon(
+                          UniconsLine.heart_alt,
+                          color: Colors.grey.shade500,
+                        ),
+                );
+              },
+            ),
             const IconButton(
               onPressed: null,
               icon: Icon(UniconsLine.share_alt),
@@ -56,7 +58,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Consumer<CartProvider>(builder: (_, cart, child) {
               return AppBarButton(
                 icon: UniconsLine.shopping_bag,
-                itemSize: cart.counter,
+                itemSize: cart.getCounter(),
                 onPress: () {
                   _goToCartPage();
                 },
@@ -295,50 +297,49 @@ class _ProductDetailsState extends State<ProductDetails> {
                     borderRadius: BorderRadius.circular(10),
                     color: const Color(0xff76bbaa),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      saveDataToCart();
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          'Add to cart',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
+                  child: Consumer<CartProvider>(
+                    builder: (_, cart, child) {
+                      return TextButton(
+                        onPressed: () {
+                          print('added');
+                          dbHelper
+                              .insertToDB(Cart(
+                            id: widget.productInfo.id,
+                            productId: widget.productInfo.id.toString(),
+                            productName: widget.productInfo.title,
+                            productPrice: widget.productInfo.price,
+                            initialPrice: widget.productInfo.price,
+                            quantity: ValueNotifier(1),
+                            img: widget.productInfo.image,
+                          ))
+                              .then((value) {
+                            cart.addTotalPrice(widget.productInfo.price);
+                            cart.addToCounter();
+                          }).onError((error, stackTrace) {
+                            // ignored
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Add to cart',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Icon(UniconsLine.shopping_bag, color: Colors.white)
+                          ],
                         ),
-                        Icon(UniconsLine.shopping_bag, color: Colors.white)
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ))
           ],
         ),
       ),
     );
-  }
-
-  void saveDataToCart() {
-    final cart = Provider.of<CartProvider>(context, listen: false);
-
-    dbHelper
-        .insertToDB(Cart(
-      id: widget.productInfo.id,
-      productId: widget.productInfo.id.toString(),
-      productName: widget.productInfo.title,
-      productPrice: widget.productInfo.price,
-      initialPrice: widget.productInfo.price,
-      quantity: ValueNotifier(1),
-      img: widget.productInfo.image,
-    ))
-        .then((value) {
-      cart.addTotalPrice(widget.productInfo.price);
-      cart.addToCounter();
-    }).onError((error, stackTrace) {
-      // ignored
-    });
   }
 
   void _goToCartPage() {

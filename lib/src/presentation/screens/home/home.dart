@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
                   return Row(children: [
                     AppBarButton(
                       icon: UniconsLine.shopping_bag,
-                      itemSize: cart.counter,
+                      itemSize: cart.getCounter(),
                       onPress: () {
                         _goToCartPage();
                       },
@@ -212,7 +212,7 @@ class _HomeState extends State<Home> {
               },
             ),
             NaviBarBtn(
-              onPressed: () => _goFavoritePage(),
+              onPressed: () => _goWalletPage(),
               itemSize: 2,
               icon: UniconsLine.wallet,
               title: 'Wallet',
@@ -246,5 +246,10 @@ class _HomeState extends State<Home> {
   void _goProfilePage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const ProfilePage()));
+  }
+
+  void _goWalletPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const WalletPage()));
   }
 }

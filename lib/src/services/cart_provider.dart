@@ -88,8 +88,8 @@ class CartProvider extends ChangeNotifier {
 
   void addTotalPrice(double productPrice) {
     _totalPrice += productPrice;
-    _setPrefsItems();
     notifyListeners();
+    _setPrefsItems();
   }
 
   void removeTotalPrice(double productPrice) {
